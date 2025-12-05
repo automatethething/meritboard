@@ -216,12 +216,10 @@ async def read_root(request: Request, user: Optional[dict] = Depends(get_current
     try:
         jobs = fetch_records(settings.supabase_jobs_table, JobPosting)
         candidates = fetch_records(settings.supabase_candidates_table, CandidateProfile)
-    except HTTPException as exc:
-        if exc.status_code == status.HTTP_500_INTERNAL_SERVER_ERROR and "Supabase configuration" in exc.detail:
-            jobs = demo_jobs()
-            candidates = demo_candidates()
-        else:
-            raise
+    except Exception as exc:
+        # Fall back to demo data if Supabase is not configured or has errors
+        jobs = demo_jobs()
+        candidates = demo_candidates()
 
     return templates.TemplateResponse(
         "index.html",
