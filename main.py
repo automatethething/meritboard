@@ -234,8 +234,14 @@ async def read_root(request: Request, user: Optional[dict] = Depends(get_current
 
 @app.get("/login")
 async def login(request: Request):
-    ensure_consentkeys_client()
-    return await oauth.consentkeys.authorize_redirect(request, settings.redirect_uri)
+    try:
+        ensure_consentkeys_client()
+        return await oauth.consentkeys.authorize_redirect(request, settings.redirect_uri)
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Login error: {str(e)}"
+        )
 
 
 @app.get(settings.redirect_route_path)
