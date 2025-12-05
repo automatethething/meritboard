@@ -57,7 +57,7 @@ MeritBoard is a minimal FastAPI application that demonstrates a meritocratic job
    This reports whether ConsentKeys credentials and Supabase connectivity variables are detected in the environment.
 
 ## Deploying to Vercel
-1. Ensure your repository contains `vercel.json` and `api/index.py` (already included) so Vercel serves the FastAPI app from a Python Serverless Function using Python 3.11.
+1. Ensure your repository contains `vercel.json` and `api/index.py` (already included) so Vercel serves the FastAPI app from a Python Serverless Function. The default Vercel Python runtime will be used.
 2. In the Vercel dashboard, add the following **Environment Variables** for your project (names must match exactly):
    - `APP_HOST=https://meritboard.vercel.app`
    - `CONSENTKEYS_REDIRECT_PATH=https://meritboard.vercel.app/auth/callback`
