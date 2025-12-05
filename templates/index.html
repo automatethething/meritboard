@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MeritBoard | WorkBC Meritocratic Board</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0f172a;
+            --panel: #0b1020;
+            --card: #11162b;
+            --accent: #48b0f7;
+            --accent-strong: #2dd4bf;
+            --text: #e8edf7;
+            --muted: #9fb0ce;
+            --border: rgba(255,255,255,0.08);
+        }
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background: radial-gradient(circle at 20% 20%, rgba(72,176,247,0.06), transparent 25%),
+                        radial-gradient(circle at 80% 0%, rgba(45,212,191,0.08), transparent 25%),
+                        var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+        }
+        a { color: var(--accent); text-decoration: none; }
+        header {
+            padding: 24px clamp(16px, 5vw, 72px) 0;
+        }
+        .nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+        .logo {
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .pill {
+            background: rgba(72,176,247,0.12);
+            color: var(--accent);
+            padding: 6px 12px;
+            border-radius: 999px;
+            font-weight: 600;
+            font-size: 12px;
+        }
+        .cta {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: linear-gradient(135deg, #48b0f7, #2dd4bf);
+            color: #0b1020;
+            border: none;
+            padding: 12px 18px;
+            border-radius: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 120ms ease, box-shadow 120ms ease;
+            text-decoration: none;
+            box-shadow: 0 12px 40px rgba(72, 176, 247, 0.25);
+            white-space: nowrap;
+        }
+        .cta.secondary {
+            background: transparent;
+            color: var(--text);
+            border: 1px solid var(--border);
+            box-shadow: none;
+            padding: 12px 14px;
+        }
+        .cta:hover { transform: translateY(-1px); }
+        main {
+            padding: 0 clamp(16px, 5vw, 72px) 72px;
+        }
+        .hero {
+            margin: 32px 0;
+            background: linear-gradient(135deg, rgba(72,176,247,0.12), rgba(45,212,191,0.14));
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: clamp(24px, 5vw, 48px);
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+        }
+        .hero h1 { margin: 0; font-size: clamp(28px, 4vw, 40px); }
+        .hero p { color: var(--muted); line-height: 1.6; margin-top: 12px; }
+        .badge-row { display: flex; flex-wrap: wrap; gap: 10px; margin: 18px 0; }
+        .badge {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            padding: 10px 14px;
+            color: var(--text);
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 18px;
+            margin-top: 12px;
+        }
+        .panel {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 18px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+        }
+        .panel h2 { margin: 0 0 12px 0; font-size: 18px; }
+        .muted { color: var(--muted); }
+        .card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .card .title {
+            font-weight: 700;
+            display: flex;
+            justify-content: space-between;
+            gap: 8px;
+            align-items: center;
+        }
+        .incentive { color: var(--accent-strong); font-weight: 700; font-size: 13px; }
+        .tagline { color: var(--muted); font-size: 14px; }
+        .list { display: flex; flex-direction: column; gap: 10px; }
+        .divider { height: 1px; background: var(--border); margin: 12px 0; }
+        .empty { padding: 12px 0; color: var(--muted); }
+        footer { padding: 36px 0 12px; color: var(--muted); text-align: center; font-size: 13px; }
+        .stack { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+        .stat {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 12px 14px;
+        }
+        .stat strong { display: block; font-size: 18px; }
+        .link { font-weight: 600; display: inline-flex; align-items: center; gap: 6px; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="nav">
+            <div class="logo">
+                <span class="pill">WorkBC Merit</span>
+                MeritBoard
+            </div>
+            <div class="stack">
+                {% if user %}
+                    <span class="pill">{{ user.email or 'Authenticated user' }}</span>
+                    <a class="cta secondary" href="/logout">Logout</a>
+                {% else %}
+                    <a class="cta" href="/login">Login with ConsentKeys</a>
+                {% endif %}
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div>
+                <div class="pill">Privacy-first hiring for WorkBC regions</div>
+                <h1>Hire based on merit, backed by BC incentives and ConsentKeys identity.</h1>
+                <p>
+                    Candidates stay anonymized until the interview stage. Employers post jobs with clarity on BC re-employment
+                    incentives, while ConsentKeys OIDC keeps authentication secure.
+                </p>
+                <div class="badge-row">
+                    <span class="badge">🔒 ConsentKeys OIDC</span>
+                    <span class="badge">🧭 Region-first discovery</span>
+                    <span class="badge">💰 Incentive eligible roles</span>
+                </div>
+                <div class="stack">
+                    {% if user %}
+                        <a class="cta" href="#jobs">View & post roles</a>
+                        <a class="cta secondary" href="#candidates">Review candidates</a>
+                    {% else %}
+                        <a class="cta" href="/login">Sign in to post jobs</a>
+                        <a class="cta secondary" href="#candidates">Browse anonymized talent</a>
+                    {% endif %}
+                </div>
+            </div>
+            <div>
+                <div class="panel">
+                    <h2>Deployment ready</h2>
+                    <div class="list">
+                        <div class="stat"><strong>Supabase</strong><span class="muted">Store jobs and candidates securely.</span></div>
+                        <div class="stat"><strong>Vercel</strong><span class="muted">Serverless FastAPI with one click.</span></div>
+                        <div class="stat"><strong>ConsentKeys</strong><span class="muted">Verified identity without bias.</span></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="grid" id="jobs">
+            <div class="panel">
+                <h2>Open roles</h2>
+                <p class="muted">Roles flagged as incentive-eligible are prioritized for WorkBC candidates.</p>
+                <div class="list">
+                    {% if jobs %}
+                        {% for job in jobs %}
+                            <div class="card">
+                                <div class="title">
+                                    <span>{{ job.title }}</span>
+                                    {% if job.incentive_eligible %}<span class="incentive">Incentive eligible</span>{% endif %}
+                                </div>
+                                <div class="tagline">{{ job.employer }} · {{ job.region }}</div>
+                                <div>{{ job.description }}</div>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="empty">No jobs posted yet. Authenticated employers can POST to <code>/api/jobs</code>.</div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="panel" id="candidates">
+                <h2>Anonymized candidates</h2>
+                <p class="muted">Skills-first profiles without gender, ethnicity, or age.</p>
+                <div class="list">
+                    {% if candidates %}
+                        {% for candidate in candidates %}
+                            <div class="card">
+                                <div class="title">
+                                    <span>{{ candidate.region }} · {{ candidate.experience_years }} yrs experience</span>
+                                </div>
+                                <div class="tagline">Desired roles: {{ candidate.desired_roles|join(', ') }}</div>
+                                <div>Skills: {{ candidate.skills|join(', ') }}</div>
+                                {% if candidate.portfolio_link %}
+                                    <div class="link">Portfolio <a href="{{ candidate.portfolio_link }}" target="_blank" rel="noopener">{{ candidate.portfolio_link }}</a></div>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="empty">No candidates yet. Submit anonymized profiles via <code>/api/candidates</code>.</div>
+                    {% endif %}
+                </div>
+            </div>
+        </section>
+        <footer>
+            MeritBoard keeps WorkBC hiring merit-based while honoring privacy with ConsentKeys.
+        </footer>
+    </main>
+</body>
+</html>
