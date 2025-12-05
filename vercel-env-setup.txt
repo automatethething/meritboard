@@ -1,0 +1,20 @@
+Copy these environment variables into Vercel Dashboard:
+(Project Settings > Environment Variables)
+
+CONSENTKEYS_CLIENT_ID=ck_292674f59a7464fe2e9441574d96df92
+CONSENTKEYS_CLIENT_SECRET=B2ZWNlDbPOWMBSh98iNkKjhcflJTANZcpENs1WGRRhc
+CONSENTKEYS_ISSUER=https://consentkeys.com
+APP_HOST=https://meritboard.vercel.app
+CONSENTKEYS_REDIRECT_PATH=https://meritboard.vercel.app/auth/callback
+SESSION_SECRET=meritboard_production_secret_change_this_to_random_string
+SUPABASE_URL=https://meritocracyboard.supabase.co
+SUPABASE_SERVICE_ROLE_KEY=sb_secret_-THqsAjUNUcMZIWtwSEaFQ_-PLqYLMW
+SUPABASE_JOBS_TABLE=jobs
+SUPABASE_CANDIDATES_TABLE=candidates
+
+IMPORTANT: Generate a new SESSION_SECRET using this command:
+python3 -c "import secrets; print(secrets.token_hex(32))"
+
+Then replace the SESSION_SECRET value above with the output.
+
+After adding these to Vercel, redeploy your app.

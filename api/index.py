@@ -1,3 +1,4 @@
 from main import app
 
-__all__ = ["app"]
+# Vercel expects a handler function
+handler = app

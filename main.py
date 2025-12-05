@@ -7,7 +7,8 @@ from dotenv import load_dotenv
 from fastapi import Depends, FastAPI, HTTPException, Request, status
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
-from pydantic import BaseModel, BaseSettings, Field
+from pydantic import BaseModel, Field
+from pydantic_settings import BaseSettings
 from starlette.middleware.sessions import SessionMiddleware
 from supabase import Client, create_client
 
@@ -17,25 +18,27 @@ load_dotenv()
 class Settings(BaseSettings):
     """Application configuration sourced from environment variables."""
 
-    consentkeys_client_id: Optional[str] = Field(None, validation_alias="CONSENTKEYS_CLIENT_ID")
+    consentkeys_client_id: Optional[str] = Field(None, alias="CONSENTKEYS_CLIENT_ID")
     consentkeys_client_secret: Optional[str] = Field(
-        None, validation_alias="CONSENTKEYS_CLIENT_SECRET"
+        None, alias="CONSENTKEYS_CLIENT_SECRET"
     )
-    consentkeys_issuer: str = Field("https://consentkeys.com", validation_alias="CONSENTKEYS_ISSUER")
+    consentkeys_issuer: str = Field("https://consentkeys.com", alias="CONSENTKEYS_ISSUER")
     consentkeys_redirect_path: str = Field(
         "https://meritboard.vercel.app/auth/callback",
-        validation_alias="CONSENTKEYS_REDIRECT_PATH",
+        alias="CONSENTKEYS_REDIRECT_PATH",
     )
-    app_host: str = Field("https://meritboard.vercel.app", validation_alias="APP_HOST")
-    session_secret: str = Field(default_factory=lambda: secrets.token_hex(32), validation_alias="SESSION_SECRET")
-    supabase_url: Optional[str] = Field(None, validation_alias="SUPABASE_URL")
+    app_host: str = Field("https://meritboard.vercel.app", alias="APP_HOST")
+    session_secret: str = Field(default_factory=lambda: secrets.token_hex(32), alias="SESSION_SECRET")
+    supabase_url: Optional[str] = Field(None, alias="SUPABASE_URL")
     supabase_service_role_key: Optional[str] = Field(
-        None, validation_alias="SUPABASE_SERVICE_ROLE_KEY"
+        None, alias="SUPABASE_SERVICE_ROLE_KEY"
     )
-    supabase_jobs_table: str = Field("jobs", validation_alias="SUPABASE_JOBS_TABLE")
+    supabase_jobs_table: str = Field("jobs", alias="SUPABASE_JOBS_TABLE")
     supabase_candidates_table: str = Field(
-        "candidates", validation_alias="SUPABASE_CANDIDATES_TABLE"
+        "candidates", alias="SUPABASE_CANDIDATES_TABLE"
     )
+    
+    model_config = {"env_file": ".env", "extra": "ignore"}
 
     @property
     def redirect_uri(self) -> str:
