@@ -89,7 +89,9 @@ def ensure_consentkeys_client() -> None:
     if not hasattr(oauth, 'consentkeys'):
         oauth.register(
             name="consentkeys",
-            server_metadata_url=f"{settings.consentkeys_issuer}/.well-known/openid-configuration",
+            authorize_url=f"{settings.consentkeys_issuer}/auth",
+            access_token_url=f"{settings.consentkeys_issuer}/token",
+            userinfo_endpoint=f"{settings.consentkeys_issuer}/userinfo",
             client_id=settings.consentkeys_client_id,
             client_secret=settings.consentkeys_client_secret,
             client_kwargs={"scope": "openid profile email"},
