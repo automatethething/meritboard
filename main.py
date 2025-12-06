@@ -101,6 +101,7 @@ def ensure_consentkeys_client() -> None:
             userinfo_endpoint="https://api.pseudoidc.consentkeys.com/userinfo",
             client_kwargs={
                 "scope": "openid profile email",
+                "token_endpoint_auth_method": "client_secret_basic",
             },
         )
 
