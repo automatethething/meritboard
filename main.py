@@ -86,23 +86,30 @@ oauth._clients = {}
 supabase_client: Optional[Client] = None
 
 
-def ensure_consentkeys_client() -> None:
+async def ensure_consentkeys_client() -> None:
     """Ensure the ConsentKeys OAuth client is registered with valid credentials."""
 
     settings.require_consentkeys_credentials()
     if not hasattr(oauth, 'consentkeys'):
+        # Register with discovery, then patch endpoints to use HTTPS
         oauth.register(
             name="consentkeys",
-            authorize_url=f"{settings.consentkeys_issuer}/auth",
-            access_token_url=f"{settings.consentkeys_issuer}/token",
-            userinfo_endpoint=f"{settings.consentkeys_issuer}/userinfo",
+            server_metadata_url=f"{settings.consentkeys_issuer}/.well-known/openid-configuration",
             client_id=settings.consentkeys_client_id,
             client_secret=settings.consentkeys_client_secret,
             client_kwargs={
                 "scope": "openid profile email",
-                "code_challenge_method": "S256"
+                "token_endpoint_auth_method": "client_secret_post",
             },
         )
+        
+        # Force HTTPS on all endpoints after loading metadata
+        if hasattr(oauth.consentkeys, 'server_metadata'):
+            metadata = oauth.consentkeys.server_metadata
+            if metadata:
+                for key in ['token_endpoint', 'authorization_endpoint', 'userinfo_endpoint']:
+                    if key in metadata and metadata[key].startswith('http://'):
+                        metadata[key] = metadata[key].replace('http://', 'https://')
 
 
 def ensure_supabase_client() -> Client:
@@ -244,7 +251,7 @@ async def read_root(request: Request, user: Optional[dict] = Depends(get_current
 @app.get("/login")
 async def login(request: Request):
     try:
-        ensure_consentkeys_client()
+        await ensure_consentkeys_client()
         return await oauth.consentkeys.authorize_redirect(request, settings.redirect_uri)
     except Exception as e:
         raise HTTPException(
@@ -255,7 +262,7 @@ async def login(request: Request):
 
 @app.get(settings.redirect_route_path)
 async def auth_callback(request: Request):
-    ensure_consentkeys_client()
+    await ensure_consentkeys_client()
     try:
         token = await oauth.consentkeys.authorize_access_token(request)
     except OAuthError as exc:
