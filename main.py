@@ -22,7 +22,7 @@ class Settings(BaseSettings):
     consentkeys_client_secret: Optional[str] = Field(
         None, alias="CONSENTKEYS_CLIENT_SECRET"
     )
-    consentkeys_issuer: str = Field("https://consentkeys.com", alias="CONSENTKEYS_ISSUER")
+    consentkeys_issuer: str = Field("https://auth.consentkeys.com", alias="CONSENTKEYS_ISSUER")
     consentkeys_redirect_path: str = Field(
         "https://meritboard.vercel.app/auth/callback",
         alias="CONSENTKEYS_REDIRECT_PATH",
