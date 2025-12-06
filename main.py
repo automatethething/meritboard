@@ -3,6 +3,7 @@ from typing import List, Optional, Type, TypeVar
 from urllib.parse import urlparse
 
 from authlib.integrations.starlette_client import OAuth, OAuthError
+import httpx
 from dotenv import load_dotenv
 from fastapi import Depends, FastAPI, HTTPException, Request, status
 from fastapi.responses import HTMLResponse, RedirectResponse
@@ -78,7 +79,10 @@ app.add_middleware(
 
 templates = Jinja2Templates(directory="templates")
 
-oauth = OAuth()
+# Create httpx client that follows redirects
+http_client = httpx.AsyncClient(follow_redirects=True)
+oauth = OAuth(fetch_token=None, update_token=None)
+oauth._clients = {}
 supabase_client: Optional[Client] = None
 
 
@@ -94,7 +98,10 @@ def ensure_consentkeys_client() -> None:
             userinfo_endpoint=f"{settings.consentkeys_issuer}/userinfo",
             client_id=settings.consentkeys_client_id,
             client_secret=settings.consentkeys_client_secret,
-            client_kwargs={"scope": "openid profile email"},
+            client_kwargs={
+                "scope": "openid profile email",
+                "code_challenge_method": "S256"
+            },
         )
 
 
