@@ -86,7 +86,7 @@ def ensure_consentkeys_client() -> None:
     """Ensure the ConsentKeys OAuth client is registered with valid credentials."""
 
     settings.require_consentkeys_credentials()
-    if "consentkeys" not in oauth:  # type: ignore[operator]
+    if not hasattr(oauth, 'consentkeys'):
         oauth.register(
             name="consentkeys",
             server_metadata_url=f"{settings.consentkeys_issuer}/.well-known/openid-configuration",
