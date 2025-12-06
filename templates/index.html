@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>MeritBoard | WorkBC Meritocratic Board</title>
+    <title>MeritBoard | Merit-Based Job Board</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💼</text></svg>">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -159,7 +159,7 @@
     <header>
         <div class="nav">
             <div class="logo">
-                <span class="pill">WorkBC Merit</span>
+                <span class="pill">Merit First</span>
                 MeritBoard
             </div>
             <div class="stack">
@@ -176,16 +176,16 @@
     <main>
         <section class="hero">
             <div>
-                <div class="pill">Privacy-first hiring for WorkBC regions</div>
-                <h1>Hire based on merit, backed by BC incentives and ConsentKeys identity.</h1>
+                <div class="pill">Privacy-first hiring platform</div>
+                <h1>Hire based on merit, powered by ConsentKeys identity.</h1>
                 <p>
-                    Candidates stay anonymized until the interview stage. Employers post jobs with clarity on BC re-employment
-                    incentives, while ConsentKeys OIDC keeps authentication secure.
+                    Candidates stay anonymized until the interview stage. Employers post jobs with transparency,
+                    while ConsentKeys OIDC keeps authentication secure and privacy-preserving.
                 </p>
                 <div class="badge-row">
                     <span class="badge">🔒 ConsentKeys OIDC</span>
-                    <span class="badge">🧭 Region-first discovery</span>
-                    <span class="badge">💰 Incentive eligible roles</span>
+                    <span class="badge">🧭 Skills-first matching</span>
+                    <span class="badge">🎯 Merit-based hiring</span>
                 </div>
                 <div class="stack">
                     {% if user %}
@@ -212,7 +212,7 @@
         <section class="grid" id="jobs">
             <div class="panel">
                 <h2>Open roles</h2>
-                <p class="muted">Roles flagged as incentive-eligible are prioritized for WorkBC candidates.</p>
+                <p class="muted">Browse opportunities from employers committed to merit-based hiring.</p>
                 <div class="list">
                     {% if jobs %}
                         {% for job in jobs %}
@@ -255,7 +255,7 @@
             </div>
         </section>
         <footer>
-            MeritBoard keeps WorkBC hiring merit-based while honoring privacy with ConsentKeys.
+            MeritBoard keeps hiring merit-based while honoring privacy with ConsentKeys.
         </footer>
     </main>
 </body>

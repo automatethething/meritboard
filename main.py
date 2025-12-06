@@ -162,17 +162,17 @@ def insert_record(table: str, record: T, model: Type[T]) -> T:
 def demo_jobs() -> List[JobPosting]:
     return [
         JobPosting(
-            employer="Pacific Inclusive Partners",
+            employer="TechCorp Solutions",
             title="Data Analyst",
-            region="Lower Mainland",
-            description="Advance evidence-based hiring programs for WorkBC with Python and SQL.",
+            region="Remote",
+            description="Analyze data and build insights using Python and SQL. Work with cross-functional teams.",
             incentive_eligible=True,
         ),
         JobPosting(
-            employer="Northern Tech Co-op",
+            employer="Startup Innovations",
             title="Full Stack Developer",
-            region="Cariboo",
-            description="Ship accessible services for WorkBC participants across BC regions.",
+            region="San Francisco",
+            description="Build scalable web applications with modern frameworks. Remote-friendly culture.",
             incentive_eligible=False,
         ),
     ]
@@ -181,15 +181,15 @@ def demo_jobs() -> List[JobPosting]:
 def demo_candidates() -> List[CandidateProfile]:
     return [
         CandidateProfile(
-            region="Vancouver Island",
+            region="Remote",
             skills=["React", "TypeScript", "Figma"],
             experience_years=3,
             desired_roles=["Frontend Developer", "Product Designer"],
             portfolio_link="https://example.com/portfolio",
         ),
         CandidateProfile(
-            region="Kootenays",
-            skills=["Python", "FastAPI", "Supabase"],
+            region="New York",
+            skills=["Python", "FastAPI", "PostgreSQL"],
             experience_years=5,
             desired_roles=["Backend Developer", "Data Engineer"],
         ),
