@@ -259,7 +259,20 @@ async def auth_callback(request: Request):
     try:
         token = await oauth.consentkeys.authorize_access_token(request)
     except OAuthError as exc:
-        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=str(exc)) from exc
+        # Log the full error for debugging
+        import traceback
+        error_detail = f"{exc.error}: {exc.description}" if hasattr(exc, 'description') else str(exc)
+        print(f"OAuth Error: {error_detail}")
+        print(traceback.format_exc())
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=error_detail) from exc
+    except Exception as exc:
+        import traceback
+        print(f"Unexpected error during token exchange: {str(exc)}")
+        print(traceback.format_exc())
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Token exchange failed: {str(exc)}"
+        ) from exc
 
     user_info = token.get("userinfo")
     if not user_info:
